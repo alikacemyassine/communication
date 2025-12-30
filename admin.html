@@ -354,6 +354,11 @@
                 const safeDepartmentExperience = submission.departmentExperience ? escapeHtml(submission.departmentExperience) : '';
                 const safeWorkshopAttendance = submission.workshopAttendance ? escapeHtml(submission.workshopAttendance) : '';
                 const safeTaskCompletion = submission.taskCompletion ? escapeHtml(submission.taskCompletion) : '';
+                const safeWorkshopContentIssues = submission.workshopContentIssues ? escapeHtml(submission.workshopContentIssues) : '';
+                const safeWorkshopInstructorIssues = submission.workshopInstructorIssues ? escapeHtml(submission.workshopInstructorIssues) : '';
+                const safeWorkshopTiming = submission.workshopTiming ? escapeHtml(submission.workshopTiming) : '';
+                const safeWorkshopTimingSuggestion = submission.workshopTimingSuggestion ? escapeHtml(submission.workshopTimingSuggestion) : '';
+
                 const safeMainReason = submission.mainReason ? escapeHtml(submission.mainReason) : '';
                 const safeOtherReason = submission.otherReason ? escapeHtml(submission.otherReason) : '';
                 const safeHasInternalIssues = submission.hasInternalIssues ? escapeHtml(submission.hasInternalIssues) : '';
@@ -393,6 +398,18 @@
                             ${submission.taskCompletion ? `<div class="detail-item">
                                 <div class="detail-label">إنجاز المهام / Tasks:</div>
                                 <div class="detail-value">${safeTaskCompletion}</div>
+                            </div>` : ''}
+                            ${submission.workshopContentIssues ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">ملاحظات المحتوى / Content Issues:</div>
+                                <div class="detail-value">${safeWorkshopContentIssues}</div>
+                            </div>` : ''}
+                            ${submission.workshopInstructorIssues ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">ملاحظات المدربين / Instructor Feedback:</div>
+                                <div class="detail-value">${safeWorkshopInstructorIssues}</div>
+                            </div>` : ''}
+                            ${submission.workshopTiming ? `<div class="detail-item">
+                                <div class="detail-label">التوقيت مناسب / Suitable Timing:</div>
+                                <div class="detail-value">${safeWorkshopTiming} ${safeWorkshopTiming === 'no' && safeWorkshopTimingSuggestion ? `(Suggestion: ${safeWorkshopTimingSuggestion})` : ''}</div>
                             </div>` : ''}
                             ${submission.mainReason ? `<div class="detail-item" style="grid-column: 1 / -1;">
                                 <div class="detail-label">الأسباب والصعوبات / Reasons:</div>

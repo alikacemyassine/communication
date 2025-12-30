@@ -358,6 +358,65 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label>
+                        هل واجهت أي مشاكل تتعلق بمحتوى الورشات؟ (صعوبة، عدم وضوح...)
+                        <div class="sub-label">Did you face any issues with the workshop content? (Difficulty,
+                            clarity...)</div>
+                    </label>
+                    <textarea name="workshopContentIssues"
+                        placeholder="إذا كانت الإجابة نعم، يرجى التوضيح... / If yes, please explain..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        هل لديك أي ملاحظات حول مقدمي الورشات؟ (طريقة الشرح، التفاعل...)
+                        <div class="sub-label">Any feedback regarding the workshop instructors? (Explanation style,
+                            interaction...)</div>
+                    </label>
+                    <textarea name="workshopInstructorIssues"
+                        placeholder="يرجى كتابة ملاحظاتك هنا... / Please write your feedback here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        هل توقيت الورشات مناسب لك؟
+                        <div class="sub-label">Is the workshop timing suitable for you?</div>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="workshopTiming" value="yes" required>
+                            <span>نعم / Yes</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="workshopTiming" value="no">
+                            <span>لا / No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="timingSuggestionGroup" style="display:none;">
+                    <label>
+                        ما هو التوقيت المفضل لديك؟
+                        <div class="sub-label">What is your preferred timing?</div>
+                    </label>
+                    <input type="text" name="workshopTimingSuggestion"
+                        placeholder="مثلاً: الجمعة مساءً / e.g., Friday evening">
+                </div>
+
+                <script>
+                    document.querySelectorAll('input[name="workshopTiming"]').forEach(radio => {
+                        radio.addEventListener('change', function () {
+                            const suggestionBox = document.getElementById('timingSuggestionGroup');
+                            if (this.value === 'no') {
+                                suggestionBox.style.display = 'block';
+                            } else {
+                                suggestionBox.style.display = 'none';
+                            }
+                        });
+                    });
+                </script>
             </div>
 
             <!-- Section 5: Reasons and Difficulties -->
