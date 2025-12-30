@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Department Feedback Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .intro {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-right: 4px solid #667eea;
+            line-height: 1.8;
+        }
+
+        .intro p {
+            margin-bottom: 10px;
+        }
+
+        .privacy-note {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .privacy-note strong {
+            color: #856404;
+            font-size: 16px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .sub-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: normal;
+            margin-top: 4px;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radio-option:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-left: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .optional {
+            color: #999;
+            font-size: 13px;
+            margin-right: 5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>استمارة تقييم قسم التواصل</h1>
+            <h2 style="color: #764ba2; font-size: 20px;">Communication Department Feedback Form</h2>
+        </div>
+
+        <div class="intro">
+            <p>السلام عليكم ورحمة الله،</p>
+            <p>في إطار تحسين سير العمل داخل قسم التواصل، ونظرًا لملاحظة قلة المشاركة في الورشات (Workshops) وعدم إنجاز
+                بعض التحديات والمهام المطلوبة، تم إعداد هذه الاستمارة من أجل فهم الأسباب الحقيقية التي تواجه الأعضاء
+                والعمل على معالجتها.</p>
+            <p><strong>هذه الاستمارة تهدف فقط إلى التقييم والتحسين، وليس المحاسبة.</strong></p>
+        </div>
+
+        <div class="privacy-note">
+            <strong>🔒 تنويه هام: هذه الاستمارة سرية تمامًا</strong><br>
+            <span style="font-size: 14px;">لا يمكن الاطلاع على الإجابات إلا من طرف: إدارة الموارد البشرية (HR) ورئيس قسم
+                التواصل (Chief of Communication)</span><br>
+            <span style="font-size: 13px; color: #856404;">This form is completely confidential. Only HR and the Head of
+                Communication can access the responses.</span>
+        </div>
+
+        <form id="feedbackForm">
+            <!-- Section 1: Personal Info -->
+            <div class="section">
+                <div class="section-title">المعلومات الشخصية / Personal Information</div>
+
+                <div class="form-group">
+                    <label>
+                        الاسم واللقب / Full Name *
+                    </label>
+                    <input type="text" name="fullName" required>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>
+                        اسم المستخدم في Telegram / Telegram Username *
+                        <div class="sub-label">مثال: @username</div>
+                    </label>
+                    <input type="text" name="telegram" placeholder="@username" required>
+                </div>
+            </div>
+
+            <!-- Section 2: Communication Group -->
+            <div class="section">
+                <div class="section-title">المجموعة داخل قسم التواصل / Communication Group</div>
+
+                <div class="form-group">
+                    <label>
+                        يرجى اختيار المجموعة التي تنتمي إليها *
+                        <div class="sub-label">Choose your group</div>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="checkbox" name="communicationGroup" value="media-production">
+                            <span>Media Production</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="checkbox" name="communicationGroup" value="graphic-design">
+                            <span>Graphic Design</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="checkbox" name="communicationGroup" value="digital-communication">
+                            <span>Digital Communication</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Department Experience -->
+            <div class="section">
+                <div class="section-title">تجربة العمل داخل القسم / Department Experience</div>
+
+                <div class="form-group">
+                    <label>
+                        كيف تقيّم تجربتك داخل قسم التواصل حتى الآن؟ *
+                        <div class="sub-label">How would you rate your experience so far?</div>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="departmentExperience" value="excellent" required>
+                            <span>ممتازة / Excellent</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="departmentExperience" value="very-good">
+                            <span>جيدة جدًا / Very Good</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="departmentExperience" value="good">
+                            <span>جيدة / Good</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="departmentExperience" value="average">
+                            <span>متوسطة / Average</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="departmentExperience" value="poor">
+                            <span>ضعيفة / Poor</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Workshops and Tasks -->
+            <div class="section">
+                <div class="section-title">الورشات والمهام / Workshops and Tasks</div>
+
+                <div class="form-group">
+                    <label>
+                        هل تحضر ورشات قسم التواصل بانتظام؟ *
+                        <div class="sub-label">Do you regularly attend the workshops?</div>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="workshopAttendance" value="yes" required>
+                            <span>نعم / Yes</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="workshopAttendance" value="sometimes">
+                            <span>أحيانًا / Sometimes</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="workshopAttendance" value="no">
+                            <span>لا / No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        هل تقوم بإنجاز التحديات أو المهام المطلوبة منك؟ *
+                        <div class="sub-label">Do you complete the assigned challenges or tasks?</div>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="taskCompletion" value="always" required>
+                            <span>دائمًا / Always</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="taskCompletion" value="sometimes">
+                            <span>أحيانًا / Sometimes</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="taskCompletion" value="rarely">
+                            <span>نادرًا / Rarely</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="taskCompletion" value="no">
+                            <span>لا / No</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Reasons and Difficulties -->
+            <div class="section">
+                <div class="section-title">الأسباب والصعوبات / Reasons and Difficulties</div>
+
+                <div class="form-group">
+                    <label>
+                        في حال عدم المشاركة المنتظمة أو عدم إنجاز المهام، ما هو السبب الرئيسي؟ *
+                        <div class="sub-label">If you are not attending or completing tasks regularly, what is the main
+                            reason?</div>
+                    </label>
+                    <textarea name="mainReason"
+                        placeholder="اذكر الأسباب والصعوبات هنا... / Please describe your reasons here..."
+                        required></textarea>
+                </div>
+            </div>
+
+            <!-- Section 6: Internal Issues -->
+            <div class="section">
+                <div class="section-title">مشاكل داخل القسم / Internal Issues</div>
+
+                <div class="form-group">
+                    <label>
+                        هل واجهت مشاكل داخل قسم التواصل؟
+                        <div class="sub-label">Did you face any issues within the department?</div>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="hasInternalIssues" value="yes">
+                            <span>نعم / Yes</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="hasInternalIssues" value="no">
+                            <span>لا / No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        إذا كانت الإجابة نعم، يرجى توضيح طبيعة المشكلة:
+                        <div class="sub-label">If yes, please explain:</div>
+                    </label>
+                    <textarea name="issueDetails" placeholder="اكتب التفاصيل هنا..."></textarea>
+                </div>
+            </div>
+
+            <!-- Section 7: Suggestions for Improvement -->
+            <div class="section">
+                <div class="section-title">اقتراحات لتحسين العمل / Suggestions for Improvement</div>
+
+                <div class="form-group">
+                    <label>
+                        ما هي الأمور التي يمكن أن تساعدك على المشاركة أكثر في الورشات وإنجاز المهام؟
+                        <div class="sub-label">What would help you attend workshops and complete tasks more regularly?
+                        </div>
+                    </label>
+                    <textarea name="improvementSuggestions" placeholder="يرجى كتابة اقتراحاتك..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        هل لديك اقتراحات لتحسين طريقة العمل أو التنظيم داخل قسم التواصل؟
+                        <div class="sub-label">Any suggestions to improve the department's workflow or organization?
+                        </div>
+                    </label>
+                    <textarea name="workflowSuggestions" placeholder="يرجى كتابة اقتراحاتك..."></textarea>
+                </div>
+            </div>
+
+            <!-- Section 8: Overall Evaluation -->
+            <div class="section">
+                <div class="section-title">التقييم العام / Overall Evaluation</div>
+
+                <div class="form-group">
+                    <label>
+                        كيف تقيّم تنظيم وإدارة قسم التواصل؟ *
+                        <div class="sub-label">Rate the Communication Department</div>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="overallRating" value="5" required>
+                            <span>⭐⭐⭐⭐⭐ ممتاز / Excellent (5/5)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="overallRating" value="4">
+                            <span>⭐⭐⭐⭐ جيد جدًا / Very Good (4/5)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="overallRating" value="3">
+                            <span>⭐⭐⭐ جيد / Good (3/5)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="overallRating" value="2">
+                            <span>⭐⭐ متوسط / Average (2/5)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="overallRating" value="1">
+                            <span>⭐ ضعيف / Poor (1/5)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 9: Additional Notes -->
+            <div class="section">
+                <div class="section-title">ملاحظات إضافية / Additional Notes</div>
+
+                <div class="form-group">
+                    <label>
+                        هل لديك أي ملاحظات أو رسائل تود توجيهها إلى إدارة الموارد البشرية أو رئيس قسم التواصل؟
+                        <div class="sub-label">Any additional comments you would like to share?</div>
+                    </label>
+                    <textarea name="additionalNotes" placeholder="أي ملاحظات أخرى..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">إرسال / Submit ✨</button>
+
+            <div class="success-message" id="successMessage">
+                <h3>شكرا جزيلاً! 💙</h3>
+                <p>تم إرسال ردك بنجاح. رأيك مهم جداً لتحسين قسم التواصل.</p>
+                <p>Thank you! Your response has been submitted successfully.</p>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                حدث خطأ في الإرسال. حاول مرة أخرى.<br>
+                An error occurred. Please try again.
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الإرسال... / Sending...';
+            errorMsg.style.display = 'none';
+
+            const formData = new FormData(e.target);
+            const data = {};
+
+            // Handle multiple values (like checkboxes)
+            for (const [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (!Array.isArray(data[key])) {
+                        data[key] = [data[key]];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            try {
+                const response = await fetch('/api/submit-feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    successMsg.style.display = 'block';
+                    errorMsg.style.display = 'none';
+
+                    setTimeout(() => {
+                        e.target.reset();
+                        successMsg.style.display = 'none';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 3000);
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'إرسال / Submit ✨';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "club-feedback-system",
+  "version": "1.0.0",
+  "description": "Feedback collection system for club members",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server-mongodb.js",
+    "dev": "nodemon server-mongodb.js"
+  },
+  "keywords": [
+    "feedback",
+    "club",
+    "form"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "mongodb": "^6.3.0",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

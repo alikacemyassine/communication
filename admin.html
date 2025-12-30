@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Club Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 36px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .submissions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .submission-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        .submission-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .submission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .submission-info {
+            flex: 1;
+        }
+
+        .submission-info h3 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .submission-meta {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .submission-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .submission-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border-right: 3px solid #667eea;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .detail-value {
+            color: #666;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state h2 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .rating-stars {
+            color: #ffc107;
+            font-size: 18px;
+        }
+
+        .export-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>لوحة التحكم - Admin Panel</h1>
+            <p>عرض جميع استمارات التقييم / View All Feedback Submissions</p>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <h3 id="totalCount">0</h3>
+                <p>إجمالي الردود / Total Submissions</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="todayCount">0</h3>
+                <p>ردود اليوم / Today's Submissions</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="avgRating">0</h3>
+                <p>التقييم المتوسط / Average Rating</p>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <div class="controls">
+                <button class="btn btn-primary" onclick="loadSubmissions()">🔄 تحديث / Refresh</button>
+                <button class="btn btn-success" onclick="exportToCSV()">📥 تصدير CSV / Export CSV</button>
+                <button class="btn btn-success" onclick="exportToJSON()">📥 تصدير JSON / Export JSON</button>
+                <input type="text" class="search-box" id="searchBox" placeholder="بحث... / Search..."
+                    onkeyup="filterSubmissions()">
+            </div>
+        </div>
+
+        <div id="submissionsContainer">
+            <div class="loading">جاري التحميل... / Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        let allSubmissions = [];
+
+        async function loadSubmissions() {
+            try {
+                const response = await fetch('/api/submissions', {
+                    credentials: 'include'
+                });
+
+                if (response.status === 401) {
+                    document.getElementById('submissionsContainer').innerHTML =
+                        '<div class="empty-state"><h2>🔒 يرجى إدخال بيانات الدخول / Please enter credentials</h2><p>إذا لم تظهر نافذة تسجيل الدخول، أعد تحميل الصفحة / If login window doesn\'t appear, reload the page</p><button class="btn btn-primary" onclick="location.reload()">إعادة التحميل / Reload</button></div>';
+                    return;
+                }
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('API Error:', response.status, errorText);
+                    throw new Error(`Failed to load submissions: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    allSubmissions = result.submissions;
+                    updateStats();
+                    displaySubmissions(allSubmissions);
+                } else {
+                    document.getElementById('submissionsContainer').innerHTML =
+                        '<div class="empty-state"><h2>خطأ في تحميل البيانات / Error loading data</h2><p>' + (result.message || 'Unknown error') + '</p></div>';
+                }
+            } catch (error) {
+                console.error('Error loading submissions:', error);
+                document.getElementById('submissionsContainer').innerHTML =
+                    '<div class="empty-state"><h2>خطأ في الاتصال / Connection Error</h2><p>' + error.message + '</p><button class="btn btn-primary" onclick="loadSubmissions()">إعادة المحاولة / Retry</button></div>';
+            }
+        }
+
+        function updateStats() {
+            const total = allSubmissions.length;
+            const today = new Date().toDateString();
+            const todaySubmissions = allSubmissions.filter(s =>
+                new Date(s.timestamp).toDateString() === today
+            ).length;
+
+            const ratings = allSubmissions
+                .filter(s => s.rating)
+                .map(s => parseInt(s.rating));
+            const avgRating = ratings.length > 0
+                ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1)
+                : '0';
+
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('todayCount').textContent = todaySubmissions;
+            document.getElementById('avgRating').textContent = avgRating;
+        }
+
+        // Escape HTML to prevent XSS attacks
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function displaySubmissions(submissions) {
+            const container = document.getElementById('submissionsContainer');
+
+            if (submissions.length === 0) {
+                container.innerHTML = '<div class="empty-state"><h2>لا توجد ردود بعد / No submissions yet</h2><p>ستظهر الردود هنا عند إرسالها</p></div>';
+                return;
+            }
+
+            container.innerHTML = submissions.map(submission => {
+                const date = new Date(submission.timestamp);
+                const dateStr = date.toLocaleString('ar-SA', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const ratingStars = submission.rating
+                    ? '⭐'.repeat(parseInt(submission.rating))
+                    : 'غير محدد / Not specified';
+
+                // Escape all user input to prevent XSS
+                const safeId = escapeHtml(submission.id);
+                const safeFullName = escapeHtml(submission.fullName || 'غير محدد / Unknown');
+                const safeTelegram = escapeHtml(submission.telegram || '');
+                const safeCommunicationGroup = submission.communicationGroup ? escapeHtml(Array.isArray(submission.communicationGroup) ? submission.communicationGroup.join(', ') : submission.communicationGroup) : '';
+                const safeDepartmentExperience = submission.departmentExperience ? escapeHtml(submission.departmentExperience) : '';
+                const safeWorkshopAttendance = submission.workshopAttendance ? escapeHtml(submission.workshopAttendance) : '';
+                const safeTaskCompletion = submission.taskCompletion ? escapeHtml(submission.taskCompletion) : '';
+                const safeMainReason = submission.mainReason ? escapeHtml(submission.mainReason) : '';
+                const safeOtherReason = submission.otherReason ? escapeHtml(submission.otherReason) : '';
+                const safeHasInternalIssues = submission.hasInternalIssues ? escapeHtml(submission.hasInternalIssues) : '';
+                const safeIssueDetails = submission.issueDetails ? escapeHtml(submission.issueDetails) : '';
+                const safeImprovementSuggestions = submission.improvementSuggestions ? escapeHtml(submission.improvementSuggestions) : '';
+                const safeWorkflowSuggestions = submission.workflowSuggestions ? escapeHtml(submission.workflowSuggestions) : '';
+                const safeOverallRating = submission.overallRating ? escapeHtml(submission.overallRating) : '';
+                const safeAdditionalNotes = submission.additionalNotes ? escapeHtml(submission.additionalNotes) : '';
+
+
+                return `
+                    <div class="submission-card" data-id="${safeId}">
+                        <div class="submission-header">
+                            <div class="submission-info">
+                                <h3>${safeFullName}</h3>
+                                <div class="submission-meta">
+                                    ${safeTelegram} | ${dateStr}
+                                </div>
+                            </div>
+                            <div class="submission-actions">
+                                <button class="btn btn-danger" onclick="deleteSubmission('${safeId}')">🗑️ حذف / Delete</button>
+                            </div>
+                        </div>
+                        <div class="submission-details">
+                            ${submission.communicationGroup ? `<div class="detail-item">
+                                <div class="detail-label">المجموعة / Group:</div>
+                                <div class="detail-value">${safeCommunicationGroup}</div>
+                            </div>` : ''}
+                            ${submission.departmentExperience ? `<div class="detail-item">
+                                <div class="detail-label">تجربة العمل / Experience:</div>
+                                <div class="detail-value">${safeDepartmentExperience}</div>
+                            </div>` : ''}
+                            ${submission.workshopAttendance ? `<div class="detail-item">
+                                <div class="detail-label">الحضور / Attendance:</div>
+                                <div class="detail-value">${safeWorkshopAttendance}</div>
+                            </div>` : ''}
+                            ${submission.taskCompletion ? `<div class="detail-item">
+                                <div class="detail-label">إنجاز المهام / Tasks:</div>
+                                <div class="detail-value">${safeTaskCompletion}</div>
+                            </div>` : ''}
+                            ${submission.mainReason ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">الأسباب والصعوبات / Reasons:</div>
+                                <div class="detail-value">${safeMainReason}</div>
+                            </div>` : ''}
+                             ${submission.otherReason ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">سبب آخر / Other Reason:</div>
+                                <div class="detail-value">${safeOtherReason}</div>
+                            </div>` : ''}
+                            ${submission.hasInternalIssues ? `<div class="detail-item">
+                                <div class="detail-label">مشاكل داخلية / Internal Issues:</div>
+                                <div class="detail-value">${safeHasInternalIssues}</div>
+                            </div>` : ''}
+                             ${submission.issueDetails ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">تفاصيل المشكلة / Issue Details:</div>
+                                <div class="detail-value">${safeIssueDetails}</div>
+                            </div>` : ''}
+                            ${submission.improvementSuggestions ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">اقتراحات التحسين / Improvements:</div>
+                                <div class="detail-value">${safeImprovementSuggestions}</div>
+                            </div>` : ''}
+                            ${submission.workflowSuggestions ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">اقتراحات التنظيم / Workflow:</div>
+                                <div class="detail-value">${safeWorkflowSuggestions}</div>
+                            </div>` : ''}
+                             ${submission.overallRating ? `<div class="detail-item">
+                                <div class="detail-label">التقييم العام / Rating:</div>
+                                <div class="detail-value"><span class="rating-stars">${ratingStars}</span> (${safeOverallRating}/5)</div>
+                            </div>` : ''}
+                            ${submission.additionalNotes ? `<div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">ملاحظات إضافية / Additional Notes:</div>
+                                <div class="detail-value">${safeAdditionalNotes}</div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterSubmissions() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const filtered = allSubmissions.filter(s => {
+                const searchable = [
+                    s.fullName,
+                    s.fullName,
+                    s.telegram,
+                    s.mainReason,
+                    s.issueDetails,
+                    s.improvementSuggestions,
+                    s.workflowSuggestions,
+                    s.additionalNotes
+                ].join(' ').toLowerCase();
+                return searchable.includes(searchTerm);
+            });
+            displaySubmissions(filtered);
+        }
+
+        async function deleteSubmission(id) {
+            if (!confirm('هل أنت متأكد من الحذف؟ / Are you sure you want to delete?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/submissions/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                if (response.status === 401) {
+                    alert('🔒 يرجى إعادة تسجيل الدخول / Please re-authenticate');
+                    location.reload();
+                    return;
+                }
+
+                if (response.ok) {
+                    loadSubmissions();
+                } else {
+                    alert('خطأ في الحذف / Error deleting');
+                }
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('خطأ في الاتصال / Connection error');
+            }
+        }
+
+        function exportToCSV() {
+            if (allSubmissions.length === 0) {
+                alert('لا توجد بيانات للتصدير / No data to export');
+                return;
+            }
+
+            const headers = ['ID', 'Timestamp', 'Name', 'Telegram', 'Group', 'Experience', 'Attendance', 'Tasks', 'Reason', 'Other Reason', 'Internal Issues', 'Issue Details', 'Improvements', 'Workflow', 'Rating', 'Additional Notes'];
+            const rows = allSubmissions.map(s => [
+                s.id,
+                s.timestamp,
+                s.fullName || '',
+                s.telegram || '',
+                Array.isArray(s.communicationGroup) ? s.communicationGroup.join(', ') : (s.communicationGroup || ''),
+                s.departmentExperience || '',
+                s.workshopAttendance || '',
+                s.taskCompletion || '',
+                (s.mainReason || '').replace(/\n/g, ' '),
+                (s.otherReason || '').replace(/\n/g, ' '),
+                s.hasInternalIssues || '',
+                (s.issueDetails || '').replace(/\n/g, ' '),
+                (s.improvementSuggestions || '').replace(/\n/g, ' '),
+                (s.workflowSuggestions || '').replace(/\n/g, ' '),
+                s.overallRating || '',
+                (s.additionalNotes || '').replace(/\n/g, ' ')
+            ]);
+
+            const csv = [headers, ...rows]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `feedback_submissions_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+
+        function exportToJSON() {
+            if (allSubmissions.length === 0) {
+                alert('لا توجد بيانات للتصدير / No data to export');
+                return;
+            }
+
+            const json = JSON.stringify(allSubmissions, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `feedback_submissions_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // Load submissions on page load
+        // Wait a bit to ensure page is fully loaded and auth is ready
+        setTimeout(() => {
+            loadSubmissions();
+        }, 500);
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadSubmissions, 30000);
+    </script>
+</body>
+
+</html>
